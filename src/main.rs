@@ -7,12 +7,18 @@ fn bmp_to_hz(bmp: u32) -> f64 {
 }
 
 fn main() {
-    println!("LFO started");
+    // setup
     let now = SystemTime::now();
+
+    // settings
+    let lfo_type: lfo::LFO = lfo::LFO::Sine;
+    let hz = bmp_to_hz(120);
+
+    println!("LFO started");
 
     loop {
         let t = now.elapsed().unwrap().as_secs_f64();
 
-        println!("{}", lfo::calc_lfo(lfo::LFO::Sine, t, bmp_to_hz(120)));
+        println!("{}", lfo::calc(lfo_type, t, hz));
     }
 }
