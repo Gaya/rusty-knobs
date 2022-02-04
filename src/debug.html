@@ -12,6 +12,12 @@
         console.log('open');
         ws.send('Hello');
     };
+
+    ws.onmessage = function (event) {
+      event.data.text()
+        .then(JSON.parse)
+        .then(console.log);
+    };
 </script>
 </body>
 </html>
