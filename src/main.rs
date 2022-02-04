@@ -1,6 +1,9 @@
+use std::thread;
 use std::time::SystemTime;
 
 mod lfo;
+mod ws;
+mod com;
 
 fn bmp_to_hz(bmp: u32) -> f64 {
     f64::from(bmp) / 60.0
@@ -8,7 +11,9 @@ fn bmp_to_hz(bmp: u32) -> f64 {
 
 fn main() {
     // setup
+    let (tx, rx) = com::create();
     let now = SystemTime::now();
+    ws::run(rx);
 
     // settings
     let lfo_type: lfo::LFO = lfo::LFO::Sine;
@@ -19,6 +24,10 @@ fn main() {
     loop {
         let t = now.elapsed().unwrap().as_secs_f64();
 
-        println!("{}", lfo::calc(lfo_type, t, hz));
+        let value = lfo::calc(lfo_type, t, hz);
+
+        let sender = String::from("lfo");
+        let message = com::ChannelMessage { sender, value };
+        tx.send(message).unwrap();
     }
 }

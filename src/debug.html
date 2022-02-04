@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const ws = new WebSocket('ws://localhost:3044');
+
+    ws.onopen = function () {
+        console.log('open');
+        ws.send('Hello');
+    };
+</script>
+</body>
+</html>
