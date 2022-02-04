@@ -16,8 +16,8 @@ fn main() {
 
     // settings
     let lfo_type: lfo::LFO = lfo::LFO::Sine;
-    let hz = bmp_to_hz(120);
-    let per_second = 60;
+    let hz = bmp_to_hz(120) / 4.0;
+    let per_second = 120;
 
     println!("LFO started");
 

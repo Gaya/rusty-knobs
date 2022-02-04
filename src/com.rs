@@ -9,14 +9,14 @@ pub struct ChannelMessage {
 }
 
 pub type Receiver = mpsc::Receiver<ChannelMessage>;
-pub type Sender = mpsc::SyncSender<ChannelMessage>;
+pub type Sender = mpsc::Sender<ChannelMessage>;
 
 pub fn serialize(message: &ChannelMessage) -> String {
     serde_json::to_string(&message).unwrap()
 }
 
 pub fn create() -> (Sender, Receiver) {
-    let (tx, rx) = mpsc::sync_channel::<ChannelMessage>(0);
+    let (tx, rx) = mpsc::channel::<ChannelMessage>();
 
     (tx, rx)
 }

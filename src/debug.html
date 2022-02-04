@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<input id="lfo" type="range" min="0" max="100" />
+
 <script>
     const ws = new WebSocket('ws://localhost:3044');
 
@@ -16,7 +19,10 @@
     ws.onmessage = function (event) {
       event.data.text()
         .then(JSON.parse)
-        .then(console.log);
+        .then((data) => {
+          const lfo = document.getElementById('lfo');
+          lfo.value = data.value * 100;
+        });
     };
 </script>
 </body>
